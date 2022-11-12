@@ -5,27 +5,19 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Data
 @Table (name ="bank_account")
 public class BankAccount {
-
-
     @Id
     @Column(name = "ACCOUNT_NO", nullable = false, updatable = false)
     private String accountNo;
-
 
 
     @NotNull

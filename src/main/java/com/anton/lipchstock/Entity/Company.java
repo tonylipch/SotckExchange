@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Table(name = "company")
 public class Company {
 
-   @Id
-   @Column(name = "COMPANY_NAME" , nullable = false)
+    @Id
+    @Column(name = "COMPANY_ID", nullable = false)
     private String companyId;
 
 
