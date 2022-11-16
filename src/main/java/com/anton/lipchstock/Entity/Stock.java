@@ -50,8 +50,9 @@ public class Stock {
     private Company company;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = Transaction.class)
-    private  Transaction transaction;
+    @ManyToOne(targetEntity = Operation.class)
+    @JoinColumn (name = "operation_id")
+    private Operation operation;
 
    @OneToMany
    @JoinColumn(name="accountNo")

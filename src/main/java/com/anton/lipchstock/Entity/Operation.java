@@ -2,7 +2,6 @@ package com.anton.lipchstock.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 
 @Data
-@Table(name = "transaction")
-public class Transaction {
+@Table(name = "operation")
+public class Operation {
 
 
     @Id
@@ -28,13 +27,12 @@ public class Transaction {
 
     private  String transactionType;
 
-
-   @OneToMany
-
-    private List<Stock> stock = new ArrayList<>();
-
-   @OneToMany
-   private  List<BankAccount> bankAccounts = new ArrayList<>();
+//
+//   @OneToMany
+//    private List<Stock> stock = new ArrayList<>();
+//
+//   @OneToMany
+//   private  List<BankAccount> bankAccounts = new ArrayList<>();
 
 
 

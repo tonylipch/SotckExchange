@@ -1,6 +1,5 @@
 package com.anton.lipchstock.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,10 +39,13 @@ public class BankAccount {
     @OneToOne
     User user_account;
 
-    @ManyToOne
-    Transaction transactionCount;
+    @ManyToOne(targetEntity = Operation.class)
 
-    @ManyToOne
+    @JoinColumn(name = "operation_id", nullable = false)
+    Operation operationsCount;
+
+    @ManyToOne(targetEntity = Stock.class)
+    @JoinColumn(name = "stock_id", nullable = false)
     Stock stockAmount;
 
 
