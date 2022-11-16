@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 @Table (name ="bank_account")
 public class BankAccount {
     @Id
-    @Column(name = "ACCOUNT_NO", nullable = false, updatable = false)
+    @Column(name = "ID_ACCOUNT", nullable = false, updatable = false)
     private String accountNo;
 
 
@@ -34,8 +34,17 @@ public class BankAccount {
     @Column(name = "IFSC_CODE")
     private String ifscCode;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "account")
-    private Investor investor;
+    @OneToOne
+    Company company_account;
+
+    @OneToOne
+    User user_account;
+
+    @ManyToOne
+    Transaction transactionCount;
+
+    @ManyToOne
+    Stock stockAmount;
+
 
 }

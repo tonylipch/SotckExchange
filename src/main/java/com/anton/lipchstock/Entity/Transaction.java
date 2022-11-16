@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -27,13 +29,14 @@ public class Transaction {
     private  String transactionType;
 
 
-   @ManyToOne
-   @JoinColumn(name = "stockId")
-    private Stock stock;
+   @OneToMany
 
-   @ManyToOne
-   @JoinColumn(name = "investorId")
-   private Investor investor;
+    private List<Stock> stock = new ArrayList<>();
+
+   @OneToMany
+   private  List<BankAccount> bankAccounts = new ArrayList<>();
+
+
 
    private  int quantity;
 }

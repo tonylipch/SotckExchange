@@ -53,13 +53,5 @@ public class Investor {
     @Column(name = "STATUS")
     private String status = "pending"; // approved or pending
 
-    @JsonIgnore
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="accountNo")
-    @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
-    private BankAccount account;
 
-    @JsonIgnore
-    @OneToMany(targetEntity = Transaction.class, mappedBy = "investor")
-    private List<Transaction> transactions = new ArrayList<>();
 }

@@ -50,8 +50,12 @@ public class Stock {
     private Company company;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Transaction.class, mappedBy = "stock")
-    private List<Transaction> transactions = new ArrayList<>();
+    @ManyToOne(targetEntity = Transaction.class)
+    private  Transaction transaction;
+
+   @OneToMany
+   @JoinColumn(name="accountNo")
+    private List<BankAccount> bankAccounts = new ArrayList<>();
 
 }
 

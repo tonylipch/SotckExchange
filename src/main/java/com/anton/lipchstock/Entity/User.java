@@ -41,6 +41,10 @@ public class User {
     private String password;
 
 
+    @OneToOne
+    BankAccount bankAccount ;
+
+
     @Override
     public String toString() {
         return "User [userId=" + userId + ", userTag=" + userTag + ", password=" + password + ", role=" + role + "]";

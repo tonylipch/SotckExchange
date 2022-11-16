@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -25,6 +22,10 @@ public class Company {
    @Column(name = "COMPANY_NAME")
    @Length(min = 3 , max =  20)
    private String companyName;
+
+
+
+
 
 
     @Override
