@@ -40,7 +40,6 @@ public class BankAccount {
     User user_account;
 
     @ManyToOne(targetEntity = Operation.class)
-
     @JoinColumn(name = "operation_id", nullable = false)
     Operation operationsCount;
 
