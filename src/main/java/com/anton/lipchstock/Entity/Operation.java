@@ -27,13 +27,6 @@ public class Operation {
 
     private  String transactionType;
 
-//
-//   @OneToMany
-//    private List<Stock> stock = new ArrayList<>();
-//
-//   @OneToMany
-//   private  List<BankAccount> bankAccounts = new ArrayList<>();
-
 
 
    private  int quantity;

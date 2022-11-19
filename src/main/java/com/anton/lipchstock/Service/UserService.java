@@ -68,5 +68,28 @@ public class UserService {
     }
 
 
+    public User login(String usertag, String password) throws Exception {
+        log.info("login() invoked");
+        User user = repo.findByUserTagAndPassword(usertag, password);
+        if(user == null) {
+            log.error("UserNotFoundException thrown...Login Failed, username or password is incorrect");
+            throw new Exception("username or password is incorrect");
+        }
+        else {
+            log.info("User "+usertag+" has logged in successfully ");
+            return user;
+        }
+    }
+
+    //Logout Method
+
+    public String logout(User user) {
+        log.info("logout() invoked");
+        log.info("User "+user.getUserTag()+" has been logged out");
+        return "User "+user.getUserTag()+" has been logged out";
+    }
+
+
+
 
 }

@@ -54,8 +54,7 @@ public class Stock {
     @JoinColumn (name = "operation_id")
     private Operation operation;
 
-   @OneToMany
-    private List<BankAccount> bankAccounts = new ArrayList<>();
+
 
 }
 
