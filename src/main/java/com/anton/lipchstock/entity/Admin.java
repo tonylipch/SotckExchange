@@ -1,4 +1,4 @@
-package com.anton.lipchstock.Entity;
+package com.anton.lipchstock.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

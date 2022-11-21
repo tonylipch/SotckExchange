@@ -1,4 +1,4 @@
-package com.anton.lipchstock.Entity;
+package com.anton.lipchstock.entity;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;

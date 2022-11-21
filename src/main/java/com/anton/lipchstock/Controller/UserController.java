@@ -1,24 +1,30 @@
-package com.anton.lipchstock.Controller;
+package com.anton.lipchstock.controller;
 
-import com.anton.lipchstock.Entity.User;
-import com.anton.lipchstock.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+
+import com.anton.lipchstock.dto.NewUserDto;
+import com.anton.lipchstock.entity.User;
+import com.anton.lipchstock.exceptions.BadRequestRuntimeException;
+import com.anton.lipchstock.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.stream.DoubleStream;
+
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    private UserService service;
+    private final UserService service;
 
-    @Autowired
-    UserController(UserService userService){
 
-        this.service = userService;
-    }
+
 
     @GetMapping("/login/{userName}/{password}")
     public User userLogin(@PathVariable("userName") String userTag, @PathVariable("password") String password) throws Exception {
@@ -34,9 +40,11 @@ public class UserController {
     }
 
     @PostMapping
-    public String addUser(@Valid @RequestBody User user) throws Exception {
+    public String addUser(@Valid @RequestBody NewUserDto user) throws Exception, BadRequestRuntimeException {
         service.addUser(user);
         return "User added successfully";
+
+
     }
 
     @DeleteMapping("/remove/{userId}")
