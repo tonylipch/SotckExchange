@@ -8,6 +8,10 @@ import com.anton.lipchstock.entity.User;
 import com.anton.lipchstock.exceptions.BadRequestRuntimeException;
 
 import com.anton.lipchstock.repository.UserRepository;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -16,7 +20,6 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,27 +37,36 @@ public class UserService {
             throw new BadRequestRuntimeException("User %s already exists");
 
         }
-        User user = new User();
-        user.setUserTag(userDto.getLogin());
-        user.setPassword(userDto.getPassword());
-        user = userRepository.save(user);
+
+
+          User user = new User();
+//        user.setUserTag(userDto.getLogin());
+//        user.setPassword(userDto.getPassword());
+//        user = userRepository.save(user);
+
         return toDto(user);
+
+
     }
 
-    private UserDto toDto(User user) {
+    private  UserDto toDto (User user){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UserDto dto = new UserDto();
-        dto.setId(user.getUserId());
-        dto.setLogin(user.getUserTag());
-        dto.setPassword(user.getPassword());
+        user = mapper.convertValue(dto,User.class);
+        dto = mapper.convertValue(user, UserDto.class);
         return dto;
+
     }
+
 
     public boolean deleteUser (User user)throws  Exception{
 
         log.info("method : 'Remove user' has been invoked");
         if (userRepository.existsById(user.getUserId())){
             userRepository.deleteById(user.getUserId());
-
             log.info ("User with tag: "+user.getUserTag()+"\n User id: "+user.getUserId()+" has been removed");
             return true;
         }
@@ -64,16 +76,22 @@ public class UserService {
 
     }
 
-    public boolean updateUser (User user) throws Exception {
+    public UserDto updateUser (UserDto updUser, Long id) throws Exception {
         log.info("method: 'Update user' has been invoked");
+        Optional<User> currentUser = userRepository.findById(id);
 
-        if (userRepository.existsById(user.getUserId())){
-            userRepository.save(user);
-            log.info("User with id "+user.getUserId()+" updated");
-            return true;
+        if (userRepository.existsById(updUser.getId())){
+
+            User user = currentUser.get();
+            user.setUserId(updUser.getId());
+            user.setUserTag(updUser.getLogin());
+            user.setPassword(updUser.getPassword());
+
+            log.info("User with id "+updUser.getId()+" updated");
+            return toDto(user);
         }
-        log.warn("UserNotFoundException thrown...Delete Failed, User not found with id "+user.getUserTag());
-        throw new Exception("User not found with id "+user.getUserId());
+        log.warn("UserNotFoundException thrown...Delete Failed, User not found with id "+updUser.getId());
+        throw new Exception("User not found with id "+updUser.getId());
 
     }
 
@@ -92,7 +110,6 @@ public class UserService {
     }
 
     //Logout Method
-
     public String logout(User user) {
         log.info("logout() invoked");
         log.info("User "+user.getUserTag()+" has been logged out");

@@ -3,17 +3,16 @@ package com.anton.lipchstock.controller;
 
 
 import com.anton.lipchstock.dto.NewUserDto;
+import com.anton.lipchstock.dto.UserDto;
 import com.anton.lipchstock.entity.User;
 import com.anton.lipchstock.exceptions.BadRequestRuntimeException;
 import com.anton.lipchstock.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.Array;
-import java.util.List;
-import java.util.stream.DoubleStream;
 
 
 @RestController
@@ -40,7 +39,8 @@ public class UserController {
     }
 
     @PostMapping
-    public String addUser(@Valid @RequestBody NewUserDto user) throws Exception, BadRequestRuntimeException {
+    public String addUser( @RequestBody NewUserDto user) throws Exception, BadRequestRuntimeException {
+
         service.addUser(user);
         return "User added successfully";
 
@@ -54,9 +54,20 @@ public class UserController {
     }
 
     @PutMapping
-    public String updateUser(@Valid @RequestBody User user) throws Exception {
-        service.updateUser(user);
-        return "User updated successfully";
+    public ResponseEntity<String> updateUser(@Valid @RequestBody UserDto user, @PathVariable Long id) throws Exception {
+
+        try {
+            service.updateUser(user,id);
+            return  ResponseEntity.ok().body("User updated successfully");
+
+
+        }catch (Exception e){
+
+            return  ResponseEntity.badRequest().body("User dont updated");
+
+
+        }
+
     }
 
 
